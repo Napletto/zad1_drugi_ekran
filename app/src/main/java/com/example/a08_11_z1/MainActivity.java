@@ -3,11 +3,14 @@ package com.example.a08_11_z1;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -15,12 +18,18 @@ public class MainActivity extends AppCompatActivity {
     private SeekBar sbLevel;
     private TextView tvLevelValue;
 
+    private EditText etName, etEmail;
+    private CheckBox cbNewsletter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         spCourse = findViewById(R.id.spCourse);
+        etName = findViewById(R.id.etName);
+        etEmail = findViewById(R.id.etEmail);
+        cbNewsletter = findViewById(R.id.cbNewsletter);
         sbLevel = findViewById(R.id.sbLevel);
         tvLevelValue = findViewById(R.id.tvLevelValue);
 
@@ -55,6 +64,11 @@ public class MainActivity extends AppCompatActivity {
 
     private void openSummary() {
         Intent intent = new Intent(this, SummaryActivity.class);
+        intent.putExtra(SummaryActivity.EXTRA_NAME, etName.getText().toString().trim());
+        intent.putExtra(SummaryActivity.EXTRA_EMAIL, etEmail.getText().toString().trim());
+        intent.putExtra(SummaryActivity.EXTRA_COURSE, spCourse.getSelectedItem().toString());
+        intent.putExtra(SummaryActivity.EXTRA_LEVEL, sbLevel.getProgress());
+        intent.putExtra(SummaryActivity.EXTRA_NEWSLETTER, cbNewsletter.isChecked());
         startActivity(intent);
     }
 }
